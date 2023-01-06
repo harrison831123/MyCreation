@@ -1,0 +1,158 @@
+﻿using EPBKS.Db;
+using SignalRAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+#region 歷程
+//調整EIP實作後踢前，取消ELearning連動登出。
+#endregion
+namespace SignalRAPI.Controllers
+{
+    //[RoutePrefix("SignalRapi/EIPLogoff")]
+    public class EIPLogoffController : BaseApiController<SignalRHub>
+    {
+        [AcceptVerbs("Post")]
+        //[Route("SignalRapi/EIPLogoff")]
+        //[Route("{userid:string}")]
+        //[HttpPost]
+        public async Task EIP(SignalRCode SignalRCode)
+        {
+            try
+            {
+                if (SignalRCode.userID == null)
+                {
+                    return;
+                }
+                else
+                {
+                    //SignalRCode.userID = aesDecryptSunnctBase64(SignalRCode.userID);
+                    //SignalRUser rUser = new SignalRUser();
+                    //DbHelperSql tsSql = new DbHelperSql("CUF");
+                    string SystemType = "logoff", message = string.Empty, name = string.Empty, id = string.Empty, date = string.Empty;
+                    //tsSql.sqlParaColl.Clear();
+                    //tsSql.sqlParaColl.AddWithValue("@userID", SignalRCode.userID);
+                    //tsSql.sqlParaColl.AddWithValue("@userID", SignalRCode.BrowserType);
+                    //rUser.connectionId = tsSql.SQL_Query(@"select * from SignalRUser where userID = @userID and BrowserType = @BrowserType").Rows[0]["ConnectionId"].ToString();
+                    //tsSql.SQL_Close();
+
+                    //實作Elearning登出EIP
+                    //string connectStr = ConfigurationManager.ConnectionStrings["CUF"].ConnectionString;
+                    //string sql = $@"select * from SignalRUser where userID = @userID and BrowserType = @BrowserType";
+                    //SqlConnection connection = new SqlConnection(connectStr);
+                    //connection.Open();
+
+                    //SqlCommand sqlCmd = new SqlCommand();
+                    //sqlCmd.Parameters.AddWithValue("@userID", SignalRCode.userID);
+                    //sqlCmd.Parameters.AddWithValue("@BrowserType", SignalRCode.BrowserType);
+
+                    //sqlCmd.Connection = connection;
+                    //sqlCmd.CommandText = sql;
+
+                    //sqlCmd.ExecuteNonQuery();
+
+                    //SqlDataReader readList = sqlCmd.ExecuteReader();
+
+                    //if (readList.HasRows)
+                    //{
+                    //    while (readList.Read())
+                    //    {
+                    //        rUser.connectionId = readList["ConnectionId"].ToString();
+                    //    };
+                    //}
+                    //connection.Close();
+
+                    await Clients.Client(SignalRCode.ConnectionID).SendAsync(message, name, id, date, SystemType);
+                    //if (rUser.connectionId == null)
+                    //{
+                    //    return;
+                    //}
+                    //else
+                    //{
+                    //    await Clients.Client(rUser.connectionId).SendAsync(message, name, id, date, SystemType);
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                DbHelperSql tsSql = new DbHelperSql("CUF");
+
+                tsSql.sqlParaColl.Clear();
+                tsSql.sqlParaColl.AddWithValue("@error", "logoff錯誤");
+                tsSql.sqlParaColl.AddWithValue("@createtime", DateTime.Now);
+                tsSql.sqlParaColl.AddWithValue("@log", "ID: " + SignalRCode.userID + " EX:" + ex.Message);
+                int id = tsSql.SQL_ExecuteAdd_OLTP(@"insert into signalrlog (error,createtime,log)  VALUES(@error,@createtime,@log)");
+
+                tsSql.SQL_Close();
+            }
+        }
+
+        public static string KEY = "";
+        public static string IV = "";
+        /// <summary>
+        /// 字串加密(非對稱式)
+        /// </summary>
+        /// <param name="SourceStr">加密前字串</param>
+        /// <returns>加密後字串</returns>
+        public static string aesEncryptSunnctBase64(string SourceStr)
+        {
+            string encrypt = "";
+            try
+            {
+                byte[] keyArray = UTF8Encoding.UTF8.GetBytes(KEY);
+                byte[] ivArray = UTF8Encoding.UTF8.GetBytes(IV);
+                byte[] toEncryptArray = UTF8Encoding.UTF8.GetBytes(SourceStr);
+                RijndaelManaged rDel = new RijndaelManaged();
+                rDel.Key = keyArray;
+                rDel.IV = ivArray;
+                rDel.Mode = CipherMode.CBC;
+                rDel.Padding = PaddingMode.PKCS7;
+                ICryptoTransform cTransform = rDel.CreateEncryptor();
+                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+
+                return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+
+            }
+            catch (Exception e)
+            {
+                encrypt = e.Message;
+            }
+            return encrypt;
+        }
+
+        /// <summary>
+        /// 字串解密(非對稱式)
+        /// </summary>
+        /// <param name="SourceStr">解密前字串</param>
+        /// <returns>解密後字串</returns>
+        public static string aesDecryptSunnctBase64(string SourceStr)
+        {
+            string decrypt = "";
+            try
+            {
+                byte[] keyArray = UTF8Encoding.UTF8.GetBytes(KEY);
+                byte[] ivArray = UTF8Encoding.UTF8.GetBytes(IV);
+                byte[] toEncryptArray = Convert.FromBase64String(SourceStr);
+                RijndaelManaged rDel = new RijndaelManaged();
+                rDel.Key = keyArray;
+                rDel.IV = ivArray;
+                rDel.Mode = CipherMode.CBC;
+                rDel.Padding = PaddingMode.PKCS7;
+                ICryptoTransform cTransform = rDel.CreateDecryptor();
+                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+                return UTF8Encoding.UTF8.GetString(resultArray);
+            }
+            catch (Exception e)
+            {
+                decrypt = e.Message;
+            }
+            return decrypt;
+        }
+    }
+}

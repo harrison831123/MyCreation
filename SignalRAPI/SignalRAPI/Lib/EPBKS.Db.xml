@@ -1,0 +1,525 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+EPBKS.Db
+</name>
+</assembly>
+<members>
+<member name="P:EPBKS.Db.DbHelperODBC.CommandTimeOut">
+	<summary>
+ Set/Get time out
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_ExecuteAdd(System.String)">
+	<summary>
+ 執行新增SQL語句，返回新增記錄的ID
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>記錄的ID(@@identity回傳)</returns>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_Exists(System.String,System.Boolean)">
+	<summary>
+ 查詢記錄是否存在
+ </summary>
+	<param name="strSql">查詢語句</param>
+	<param name="blCloseConn">是否關閉連線</param>
+	<returns>是否存在</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_Exists_OLTP(System.String)">
+	<summary>
+ 查詢記錄是否存在
+ </summary>
+	<param name="strSql">查詢語句</param>
+	<returns>是否存在</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_ExecuteAdd_OLTP(System.String)">
+	<summary>
+ 執行新增SQL語句，返回新增記錄的ID
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>記錄的ID(@@identity回傳)</returns>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_Exec(System.String)">
+	<summary>
+ ODBC_Exec 執行SQL命令, 回傳成功筆數
+ </summary>
+	<param name="strOdbc">SQL命令</param>
+	<returns>有效筆數</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_Query(System.String,System.Boolean)">
+	<summary>
+ 執行SQL語句，返回查詢結果資料表 
+ </summary>
+	<param name="strOdbc">SQL語句</param>
+	<returns>資料表</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_QueryDs(System.String,System.Boolean)">
+	<summary>
+ 執行SQL語句，返回查詢結果資料表集合 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<param name="blCloseConn">是否關閉Connection</param>
+	<returns>資料表 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_ExecScalar(System.String,System.Boolean)">
+	<summary>
+ 執行一條計算查詢結果語句，返回查詢結果（object）。
+ </summary>
+	<param name="strOdbc">查詢語句</param>
+	<returns>查詢結果（object）</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_ExecScalar_OLTP(System.String)">
+	<summary>
+ 交易模式執行一條計算查詢結果語句，返回查詢結果（object）。
+ </summary>
+	<param name="strOdbc">查詢語句</param>
+	<returns>查詢結果（object）</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_Exec_OLTP(System.String)">
+	<summary>
+  執行SQL命令, 回傳成功筆數
+ </summary>
+	<param name="strOdbc">SQL命令</param>
+	<returns>回傳有效筆數</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_Query_OLTP(System.String)">
+	<summary>
+ 交易模式執行SQL語句，返回查詢結果資料表
+ </summary>
+	<param name="strOdbc">SQL語句</param>
+	<returns>資料表</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_QueryDs_OLTP(System.String)">
+	<summary>
+ 交易模式執行SQL語句，返回查詢結果資料表集合 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>資料表 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_BeginTrans(System.Data.IsolationLevel)">
+	<summary>
+ 開啟事務.
+ </summary>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_CommitTrans">
+	<summary>
+ 提交事務.
+ </summary>
+</member><member name="M:EPBKS.Db.DbHelperODBC.Odbc_RollBackTrans">
+	<summary>
+ 回復事務.
+ </summary>
+</member><member name="F:EPBKS.Db.DbHelperODBC.OdbcConnectionOwnership.Internal">
+	<summary>Connection is owned and managed by OdbcHelper</summary>
+</member><member name="F:EPBKS.Db.DbHelperODBC.OdbcConnectionOwnership.External">
+	<summary>Connection is owned and managed by the caller</summary>
+</member><member name="M:EPBKS.Db.DbHelperODBC.CreateConnString(EPBKS.Db.DbHelperODBC.ConectionstringType)">
+	<summary>
+	</summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperODBC.CreateConnString(System.String,EPBKS.Db.DbHelperODBC.ConectionstringType)">
+	<summary>
+ 新增連線字串
+ </summary>
+	<param name="name"></param>
+	<param name="connectionType"></param>
+	<remarks></remarks>
+</member><member name="P:EPBKS.Db.DbHelperSql.SetSqlInjection">
+	<summary>
+ set enable/disable sql Injection filter,default is enable
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:EPBKS.Db.DbHelperSql.CommandTimeOut">
+	<summary>
+ Set/Get sql command time out setting
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.#ctor">
+	<summary>
+ 初始化,連接資料庫(預設名稱為SqlconnString)
+ </summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.#ctor(System.String,EPBKS.Db.DbHelperSql.ConectionstringType)">
+	<summary>
+ 初始化,連接資料庫
+ </summary>
+	<param name="strConnectionName">連接資料庫的名稱</param>
+	<param name="connectionType"></param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Open">
+	<summary>
+ 連線開啟
+ </summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Close">
+	<summary>
+ 連線關閉
+ </summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.GetCommandType(System.String)">
+	<summary>
+ 判別SQL命令型態
+ </summary>
+	<param name="strSQL">SQL命令字串</param>
+	<returns>回傳CommandType</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.MessageEventHandler(System.Object,System.Data.SqlClient.SqlInfoMessageEventArgs)">
+	<summary>
+ SQL Error錯誤回傳
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_ExecuteAdd(System.String)">
+	<summary>
+ 執行新增SQL語句，返回新增記錄的ID
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>記錄的ID(@@identity回傳)</returns>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_ExecuteAdd_OLTP(System.String)">
+	<summary>
+ 執行新增SQL語句，返回新增記錄的ID
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>記錄的ID(@@identity回傳)</returns>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteNonQuery(System.String)">
+	<summary>
+ 執行新增SQL語句，返回新增記錄的ID
+ </summary>
+	<param name="cmdText">SQL語句</param>
+	<returns>記錄的ID(@@identity回傳)</returns>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Exec(System.String,System.Boolean)">
+	<summary>
+ 執行SQL命令(Select,Insert,Update,Delete..)
+ </summary>
+	<param name="strSQL">SQL命令</param>
+	<param name="blCloseConn">是否關閉連線</param>
+	<returns>回傳成功筆數</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_ExecScalar_OLTP(System.String)">
+	<summary>
+ 交易模式執行一條計算查詢結果語句，返回查詢結果（object）。
+ </summary>
+	<param name="strSQL">查詢語句</param>
+	<returns>查詢結果（object）</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Exists(System.String,System.Boolean)">
+	<summary>
+ 查詢記錄是否存在
+ </summary>
+	<param name="strSql">查詢語句</param>
+	<param name="blCloseConn">是否關閉連線</param>
+	<returns>是否存在</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Exists_OLTP(System.String)">
+	<summary>
+ 查詢記錄是否存在
+ </summary>
+	<param name="strSql">查詢語句</param>
+	<returns>是否存在</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_ExecReader(System.String)">
+	<summary>
+ 執行SQL語句,DataReader 抓取資料返回 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>IDataReader </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_ExecScalar(System.String,System.Boolean)">
+	<summary>
+ 執行一條計算查詢結果語句，返回查詢結果（object）。
+ </summary>
+	<param name="strSQL">查詢語句</param>
+	<param name="blCloseConn">是否關閉連線</param>
+	<returns>查詢結果（object）</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_ExecuteSqlList(EPBKS.Db.QueueHashtable)">
+	<summary>
+ 執行多條SQL語句，實現數據庫事務。
+ </summary>
+	<param name="SQLStringList">SQL語句的哈希表（key為sql語句，value是該語句的SqlParameter[]）</param>
+	<returns>True/False</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_DTBulkcopy(System.Data.DataTable@)">
+	<summary>
+ 批次新增紀錄Bulkcopy方式
+ </summary>
+	<param name="sourceDt">資料表名</param>
+	<returns>新增是否成功</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_DTBulkcopy_OLTP(System.Data.DataTable@,System.Collections.Generic.List{System.String},System.Int32,System.Int32)">
+	<summary>
+ 批次新增資料Bulkcopy方式
+ </summary>
+	<param name="sourceDt">資料表</param>
+	<param name="columnName">定義要映射複製對應欄位</param>
+	<param name="BatchSize">批次傳送到每次到伺服器的資料列數目</param>
+	<param name="BulkCopyTimeout">批次傳送逾時時間</param>
+	<returns>Boolean</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_DTBulkcopy(System.Data.DataTable@,System.Collections.Generic.List{System.String},System.Int32,System.Int32)">
+	<summary>
+  批次新增資料Bulkcopy方式
+ </summary>
+	<param name="sourceDt">資料表</param>
+	<param name="columnName">定義要映射複製對應欄位</param>
+	<param name="BatchSize">批次傳送到每次到伺服器的資料列數目</param>
+	<param name="BulkCopyTimeout">批次傳送逾時時間</param>
+	<returns>Boolean</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_DSBulkcopy(System.Data.DataSet@,System.Collections.Generic.List{System.String[]},System.Int32,System.Int32)">
+	<summary>
+ 批次新增資料Bulkcopy方式
+ </summary>
+	<param name="sourceDs">資料表集合</param>
+	<param name="columnName">定義要映射複製對應欄位</param>
+	<param name="BatchSize">批次傳送到每次到伺服器的資料列數目</param>
+	<param name="BulkCopyTimeout">批次傳送逾時時間</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_DSBulkcopyByBatchSizeSet(System.Data.DataSet@,System.Collections.Generic.List{System.String[]},System.Int32,System.Int32,System.Data.SqlClient.SqlRowsCopiedEventHandler)">
+	<summary>
+ 批次新增資料Bulkcopy方式
+ </summary>
+	<param name="sourceDs">資料表集合</param>
+	<param name="columnName">定義要映射複製對應欄位</param>
+	<param name="BatchSize">批次傳送到每次到伺服器的資料列數目</param>
+	<param name="BulkCopyTimeout">批次傳送逾時時間</param>
+	<param name="eventfun">SqlRowsCopiedEventHandler(sender As Object, e As SqlRowsCopiedEventArgs)自訂事件處理函式 </param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_QueryBackXML(System.String)">
+	<summary>
+ 語句末尾添加FOR XML從句,用XML格式返回
+ </summary>
+	<param name="strSQL">SQL命令</param>
+	<returns>XML 資料的讀取器 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Query(System.String,System.Boolean)">
+	<summary>
+ 執行SQL語句，返回查詢結果資料表 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<param name="blCloseConn">是否關閉Connection</param>
+	<returns>資料表 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_QueryDs(System.String,System.Boolean)">
+	<summary>
+ 執行SQL語句，返回查詢結果資料表集合 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<param name="blCloseConn">是否關閉Connection</param>
+	<returns>資料表 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Exec_OLTP(System.String)">
+	<summary>
+ 交易模式下執行SQL語句，返回影響的記錄數
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>影響的記錄數</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_Query_OLTP(System.String)">
+	<summary>
+ 交易模式執行SQL語句，返回查詢結果資料表 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>資料表 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_QueryDs_OLTP(System.String)">
+	<summary>
+ 交易模式執行SQL語句，返回查詢結果資料表集合 
+ </summary>
+	<param name="strSQL">SQL語句</param>
+	<returns>資料表 </returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_BeginTrans(System.Data.IsolationLevel)">
+	<summary>
+ 開始交易.
+ </summary>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_CommitTrans">
+	<summary>
+ 完成交易.
+ </summary>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_RollBackTrans">
+	<summary>
+ 回復交易.
+ </summary>
+</member><member name="M:EPBKS.Db.DbHelperSql.Excel_Query(System.String,System.String)">
+	<summary>
+ 格式從 Excel 97 ~ Excel 2003 匯入 xls
+ </summary>
+	<param name="filename"> excel 檔名</param>
+	<param name="strSQL">查詢語句</param>
+	<returns>資料表</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.Excel_QueryAce12(System.String,System.String)">
+	<summary>
+  格式從 Excel 2017 匯入 xlsx
+ </summary>
+	<param name="filename">excel 檔名</param>
+	<param name="strSQL">查詢語句</param>
+	<returns>資料表</returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.Excel_QueryByVersion(System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="filename"></param>
+	<param name="strSQL"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SQL_CSVBulkCopy(System.String,System.Char,System.String,System.Collections.Generic.List{System.String},System.Text.Encoding)">
+	<summary>
+ CSV 大量匯入
+ </summary>
+	<param name="Filepath">text檔名</param>
+	<param name="SplitChar">分隔符號</param>
+	<param name="CopyToTableName">目的端資料表名稱</param>
+	<param name="CopyToColumns">複製欄位名</param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ISSqlInjection(System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 資料隱碼防禦
+ </summary>
+	<param name="commandParameters"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteNonQuery(System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 執行查詢
+ </summary>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteDataset(System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 執行查詢,返回資料集
+ </summary>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteDatatable(System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 執行查詢,返回資料表
+ </summary>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="F:EPBKS.Db.DbHelperSql.SqlConnectionOwnership.Internal">
+	<summary>Connection is owned and managed by SqlHelper</summary>
+</member><member name="F:EPBKS.Db.DbHelperSql.SqlConnectionOwnership.External">
+	<summary>Connection is owned and managed by the caller</summary>
+</member><member name="T:EPBKS.Db.DbHelperSql.SqlConnectionOwnership">
+	<summary>
+ 連線擁有方式
+ </summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteReader(System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[],EPBKS.Db.DbHelperSql.SqlConnectionOwnership)">
+	<summary>
+ 執行查詢,返回Reader
+ </summary>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<param name="connectionOwnership"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteScalar(System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 單筆查詢
+ </summary>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.ExecuteXmlReader(System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 語句末尾添加FOR XML從句
+ </summary>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.SetCollToParameter">
+	<summary>
+ 設定Parameter參數
+ </summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.AttachParameters(System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+ 挾帶參數
+ </summary>
+	<param name="command">Sql 命令</param>
+	<param name="commandParameters">命令挾帶的參數</param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.AssignParameterValues(System.Data.SqlClient.SqlParameter[],System.Object[])">
+	<summary>
+ 指定參數與值
+ </summary>
+	<param name="commandParameters">Sql 參數</param>
+	<param name="parameterValues">參數值</param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.PrepareCommand(System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+	</summary>
+	<param name="command"></param>
+	<param name="connection"></param>
+	<param name="transaction"></param>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="commandParameters"></param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.PrepareCommand(System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Int32,System.Data.SqlClient.SqlParameter[])">
+	<summary>
+	</summary>
+	<param name="command"></param>
+	<param name="connection"></param>
+	<param name="transaction"></param>
+	<param name="commandType"></param>
+	<param name="commandText"></param>
+	<param name="timeOut"></param>
+	<param name="commandParameters"></param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.CreateConnString(EPBKS.Db.DbHelperSql.ConectionstringType)">
+	<summary>
+	</summary>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.CreateConnString(System.String,EPBKS.Db.DbHelperSql.ConectionstringType)">
+	<summary>
+ 新增連線字串
+ </summary>
+	<param name="name"></param>
+	<param name="connectionType"></param>
+	<remarks></remarks>
+</member><member name="M:EPBKS.Db.DbHelperSql.CreateConn">
+	<summary>
+	</summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:EPBKS.Db.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:EPBKS.Db.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:EPBKS.Db.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

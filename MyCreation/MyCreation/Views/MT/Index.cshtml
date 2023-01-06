@@ -1,0 +1,92 @@
+﻿@model MyCreation.Models.MeetingDetail
+
+
+@*開始日期*@
+<div class="detail-col form-group form-inline">
+    <img class="index-title-icon" src="~/Content/img/calendar_g.png" />@Html.LabelFor(m => m.MOStartDate, new { @class = "detail-msg" })
+    <div class="col-md-offset-1 " style="display:flex;">
+        @Html.TextBoxFor(m => m.MOStartDate, new { @class = "jquery_datetimepicker form-control " + "detail-cell ", @style = "margin:0px 10px 0px 10px", @Value = Model.MOStartDate.ToString("yyyy/MM/dd"), @maxlength = "16", @onchange = "ChkTime();" })
+
+        <div class="">
+            <select class="form-control text-box single-line" id="shour" name="shour" onchange="ChkTime();">
+                @for (var h = 0; h < 24; h++)
+                {
+                    <option value="@(Convert.ToString(h < 10 ? "0" : ""))@h">@(Convert.ToString(h < 10 ? "0" : ""))@h</option>
+                };
+            </select>
+        </div>
+        <div class="">
+            <label for="start-hour" class="start-hour-text" style="font-size:25px;">時</label>
+        </div>
+        <div class="">
+            <select id="smin" name="smin" class="form-control text-box single-line" onchange="ChkTime();">
+                @for (var h = 0; h < 60; h++)
+                {
+                    <option value="@(Convert.ToString(h < 10 ? "0" : ""))@h">@(Convert.ToString(h < 10 ? "0" : ""))@h</option>
+                };
+            </select>
+        </div>
+        <div class="">
+            <label for="start-min" class="start-min-text" style="font-size:25px;">分</label>
+        </div>
+    </div>
+</div>
+
+@*結束日期*@
+<div class="detail-col form-group form-inline">
+    <img class="index-title-icon" src="~/Content/img/calendar_g.png" />@Html.LabelFor(m => m.MOEndDate, new { @class = "detail-msg" })
+    <div class="col-md-offset-1" style="display:flex;">
+        @Html.TextBoxFor(m => m.MOEndDate, new { @class = "jquery_datetimepicker form-control " + "detail-cell", @style = "margin:0px 10px 0px 10px", @Value = Model.MOEndDate.ToString("yyyy/MM/dd"), @maxlength = "16", @onchange = "ChkTime();" })
+
+        <div class="">
+            <select class="form-control text-box single-line" id="ehour" name="ehour" onchange="ChkTime();">
+                @for (var h = 0; h < 24; h++)
+                {
+                    <option value="@(Convert.ToString(h < 10 ? "0" : ""))@h">@(Convert.ToString(h < 10 ? "0" : ""))@h</option>
+                };
+            </select>
+        </div>
+        <div class="">
+            <label for="start-hour" class="start-hour-text" style="font-size:25px;">時</label>
+        </div>
+        <div class="">
+            <select id="emin" name="emin" class="form-control text-box single-line" onchange="ChkTime();">
+                @for (var h = 0; h < 60; h++)
+                {
+                    <option value="@(Convert.ToString(h < 10 ? "0" : ""))@h">@(Convert.ToString(h < 10 ? "0" : ""))@h</option>
+                };
+            </select>
+        </div>
+        <div class="">
+            <label for="start-min" class="start-min-text" style="font-size:25px;">分</label>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ChkTime() {
+        var sdate = $("#MTStartDate").val();
+        var shour = $("#shour").val();
+        var smin = $("#smin").val();
+        var edate = $("#MTEndDate").val();
+        var ehour = $("#ehour").val();
+        var emin = $("#emin").val();
+        sdate = sdate + " " + shour + ":" + smin;
+        edate = edate + " " + ehour + ":" + emin;
+        var chk_value = $("#MDName :selected").val(); //會議室流水號
+
+        @*判斷會議地點為空時*@
+        if (chk_value >= 1){                  
+            $.ajax({
+                url: "/MT/GetMDIDToChk",
+                type:'Post',
+                data: { MDID: chk_value,sdate:sdate,edate:edate},
+                dataType: 'json',
+                success: function (result) {
+                    timechkval = result;
+                }
+            })
+        }
+    }
+
+</script>
