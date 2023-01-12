@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel=stylesheet type="text/css" href="css/food.css">
+</head>
+
+<body>
+    <div  class="backcolorbody">
+        <div class="container">
+            <h2 class="title">農村地方美食特色小吃料理</h2>
+            <form class="cityoption">
+                <select id="city-list" onchange="changeCity()">
+                </select>
+                <select id="town-list" onchange="changeTown()">
+                    <option style="background-color: #EEEEEE;" disabled="disabled">請選擇鄉鎮</option>
+                </select>
+            </form>
+            <div id="myDiv" class="masonry"></div>
+        </div>
+        <footer>
+            <p>政府資料開放平台</p>
+            <a href="https://data.gov.tw/dataset/6037">https://data.gov.tw/dataset/6037</a>
+        </footer>
+    </div>
+
+
+    <script>
+        //在頁面未加載完畢之前顯示的loading Html自定義內容
+        var _LoadingHtml = "<div id='loadingDiv' class='loading'>" + '<img src="image/200.gif" />' + '<p >頁面下載中，請稍後...!</p>' + "</div>";
+
+        //呈現loading效果
+        document.write(_LoadingHtml);
+
+        //監聽加載狀態改變
+        document.onreadystatechange = completeLoading;
+
+        //加載狀態為complete時移除loading效果
+        function completeLoading() {
+            if (document.readyState == "complete") {
+                var loadingMask = document.getElementById('loadingDiv');
+                loadingMask.parentNode.removeChild(loadingMask);    //parentNode 属性以 Node 对象的形式返回指定节点的父节点。如果指定节点没有父节点，则返回 null。
+            }
+        }
+
+        const uri = "js/FOOD.json";
+
+        fetch(uri, { method: 'GET' })
+            .then(res => {
+                return res.json();
+            }).then(result => {
+                let myDiv = document.querySelector("#myDiv");
+                var str = "<div>";
+
+                for (var i = 0; i < result.length; i++) {
+                    var Town = result[i].Town;
+                    var Name = result[i].Name;
+                    var HostWords = result[i].HostWords;
+                    var City = result[i].City;
+                    var PicURL = result[i].PicURL;
+
+                    str += "<div style='position:relative;'>"
+                        + "<div class='gradient'>" + "<img class='item' src=" + PicURL + ">" 
+                        + "<div class='city'>" + City + "</div>" + "<div class='name'>" + Name + "</div>"
+                        + "<div class='town'>" + Town + "</div>"+ "<div class='hostwords'>" + "<div class='boder'>" + "</div>"+ HostWords + "</div>" + 
+                        "</div>" + "</div>";                   
+                }
+                str += "</div>";
+                myDiv.innerHTML = str;
+                var citylist = document.getElementById("city-list");
+                var inner = "";
+
+                for (var i = 0; i < result.length; i++) {
+                    if (i == 0) {
+                        inner = inner + '<option >' + result[i].City + '</option>';
+                    }
+                    else if (result[i].City == result[i - 1].City) {
+                        continue;
+                    }
+                    else {
+                        inner = inner + '<option >' + result[i].City + '</option>';
+                    }
+                }
+                citylist.innerHTML = '<option style="background-color: #EEEEEE;" disabled="disabled">' + "請選擇行政區域" + '</option>' + inner;
+            });
+        var citylist = document.getElementById("city-list");
+        var townlist = document.getElementById("town-list");
+        function changeCity() {
+            var cityName;
+
+            for (i = 0; i < citylist.length; i++) {
+                if (citylist[i].selected == true) {
+                    cityName = citylist[i].innerText;
+                    console.log(cityName);
+                }
+            }
+            fetch(uri, { method: 'GET' })
+                .then(res => {
+                    return res.json();
+                }).then(result => {
+                    let myDiv = document.querySelector("#myDiv");
+                    var str = "<div>";
+                    var Sinner = "";
+                    for (var i = 0; i < result.length; i++) {
+                        if (i == 0) {
+                            Sinner = Sinner + '<option>' + result[i].Town + '</option>';
+                            console.log(result[i].Town)
+                        }
+                        else if (result[i].Town == result[i - 1].Town) {
+                            continue;
+                        }
+                        else if (cityName == result[i].City) {
+                            Sinner = Sinner + '<option>' + result[i].Town + '</option>';
+                        }
+                    }
+                    console.log(result);
+                    for (var i = 0; i < result.length; i++) {
+                        var Town = result[i].Town;
+                        var Name = result[i].Name;
+                        var HostWords = result[i].HostWords;
+                        var City = result[i].City;
+                        var PicURL = result[i].PicURL;
+                        if (City == cityName) {
+                            str += "<div style='position:relative;'>"
+                        + "<div class='gradient'>" + "<img class='item' src=" + PicURL + ">" 
+                        + "<div class='city'>" + City + "</div>" + "<div class='name'>" + Name + "</div>"
+                        + "<div class='town'>" + Town + "</div>"+ "<div class='hostwords'>"+"<div class='boder'>"+ "</div>"+ HostWords + "</div>" + 
+                        "</div>" + "</div>";
+                        }
+                    }
+                    str += "</div>";
+                    myDiv.innerHTML = str;
+                    townlist.innerHTML = '<option style="background-color: #EEEEEE;">' + '請選擇鄉鎮' + '</option>' + Sinner;
+                });
+        }
+        function changeTown() {
+            var townName;
+
+            for (i = 0; i < townlist.length; i++) {
+                if (townlist[i].selected == true) {
+                    townName = townlist[i].innerText;
+                    console.log(townName);
+                }
+            }
+            fetch(uri, { method: 'GET' })
+                .then(res => {
+                    return res.json();
+                }).then(result => {
+                    let myDiv = document.querySelector("#myDiv");
+                    var str = "<div>";
+
+                    console.log(result);
+                    for (var i = 0; i < result.length; i++) {
+                        var Town = result[i].Town;
+                        var Name = result[i].Name;
+                        var HostWords = result[i].HostWords;
+                        var City = result[i].City;
+                        var PicURL = result[i].PicURL;
+                        if (Town == townName) {
+                            str += "<div style='position:relative;'>"
+                        + "<div class='gradient'>" + "<img class='item' src=" + PicURL + ">" 
+                        + "<div class='city'>" + City + "</div>" + "<div class='name'>" + Name + "</div>"
+                        + "<div class='town'>" + Town + "</div>"+ "<div class='hostwords'>"+"<div class='boder'>"+ "</div>"+ HostWords + "</div>" + 
+                        "</div>" + "</div>";
+                        }
+                    }
+                    str += "</div>";
+                    myDiv.innerHTML = str;
+                });
+        }
+    </script>
+
+</body>
+
+
+</html>

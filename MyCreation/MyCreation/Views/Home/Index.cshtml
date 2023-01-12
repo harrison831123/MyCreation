@@ -29,3 +29,30 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+
+<input type='checkbox' id='Iden' name='PayType' value='Iden' onchange='ChangeChk(this)' />
+
+<script>
+    function ChangeChk(Iden) {
+        let exist = 0;
+        for (let i in Mainchk_value) {
+            let key = Mainchk_value[i];
+            if (Iden == key) {
+                exist = 1;
+            }
+        }
+        if (exist == 0) {
+            Mainchk_value.push(Iden);
+        } else {
+            //去除重複
+            let index = Mainchk_value.indexOf(Iden);
+            if (index !== -1) {
+                Mainchk_value.splice(index, 1);
+                chk_value.splice(index, 1);
+                Notchk_value.splice(index, 1);
+            }
+        }
+    }
+
+
+</script>
