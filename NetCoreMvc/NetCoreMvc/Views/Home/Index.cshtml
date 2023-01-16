@@ -1,0 +1,46 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>*@
+<style>
+	p{
+		margin:0px;
+	}
+</style>
+
+<input type="text" id="Chat" />
+<input type="button" value="聊天" onclick="AA();" />
+<div id="ChatAI">
+	
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+	$(function () {
+
+	});
+	function AA() {
+		let Chat = $("#Chat").val();
+		$.ajax({
+			url: '@Url.Action("GetTask", "Home", new { area = "Home" })',
+			type: 'Post',
+			cache: false,
+			data: { Chat: Chat },
+			async: true,
+			success: function (data) {
+				console.log(data[0].chat);
+				$("#ChatAI").append("<p>我: " + Chat + "</p><br />")
+				$("#ChatAI").append("<p>" + data[0].chat + "</p><br />")
+				$("#Chat").val("");
+			},
+			error: function () {
+				alert("field"); //always failed
+			}
+		});
+	}
+
+</script>

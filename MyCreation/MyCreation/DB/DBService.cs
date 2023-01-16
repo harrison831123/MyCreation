@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -49,7 +51,7 @@ namespace MyCreation.DB
         }
 
         /// <summary>
-        /// 大批調整bulkinsert
+        /// bulkinsert範例
         /// </summary>
         /// <param name="dt">data</param>
         public void ag078BulkInsert(DataTable dt, List<string> descs)
@@ -105,6 +107,237 @@ namespace MyCreation.DB
             return result;
         }
 
+        /// <summary>
+        /// 保險公司佣酬檢核表
+        /// </summary>
+        /// <param name="year">年度</param>
+        /// <returns>Stream</returns>
+        public Stream GetCompanyMerSalDReportList(MerSalViewModel condition)
+        {
+            MemoryStream ms = new MemoryStream();
+            ExcelPackage excel = new ExcelPackage();
+
+            #region SQL資料
+            //string WebBroker = WebBrokerRepository.DbInfo.ConnectionString;
+            //DataSet ds = new DataSet();
+            //using (SqlConnection sqlcon = new SqlConnection(WebBroker))
+            //{
+            //    using (SqlCommand cmd = new SqlCommand("usp_MerSalDRpt", sqlcon))
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.Add("@ProductionYm", SqlDbType.VarChar).Value = condition.ProductionYM;
+            //        cmd.Parameters.Add("@Sequence", SqlDbType.VarChar).Value = condition.Sequence;
+            //        cmd.Parameters.Add("@CompanyCode", SqlDbType.VarChar).Value = condition.CompanyCode ?? "";
+            //        cmd.Parameters.Add("@Rpttype", SqlDbType.VarChar).Value = "Item";
+
+            //        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+            //        {
+            //            da.Fill(ds);
+            //        }
+            //    }
+            //}
+
+            //// 定義集合    
+            //List<MerSalSystemReportModel> merSalSystemReports = new List<MerSalSystemReportModel>();
+            //List<MerSalCompanyReportModel> merSalCompanyReports = new List<MerSalCompanyReportModel>();
+            //MerSalSystemReportModel t = new MerSalSystemReportModel();
+            //MerSalCompanyReportModel t2 = new MerSalCompanyReportModel();
+            //PropertyInfo[] prop = t.GetType().GetProperties();
+            //PropertyInfo[] prop2 = t2.GetType().GetProperties();
+            //foreach (DataRow dr in ds.Tables[0].Rows)
+            //{
+            //    t = new MerSalSystemReportModel();
+            //    //通過反射獲取T類型的所有成員
+            //    foreach (PropertyInfo pi in prop)
+            //    {
+            //        //DataTable列名=屬性名
+            //        if (ds.Tables[0].Columns.Contains(pi.Name))
+            //        {
+            //            //屬性值不為空
+            //            if (dr[pi.Name] != DBNull.Value)
+            //            {
+            //                object value = Convert.ChangeType(dr[pi.Name], pi.PropertyType);
+            //                //給T類型字段賦值
+            //                pi.SetValue(t, value, null);
+            //            }
+            //        }
+            //    }
+            //    //將T類型添加到集合list
+            //    merSalSystemReports.Add(t);
+            //}
+            //foreach (DataRow dr in ds.Tables[1].Rows)
+            //{
+            //    t2 = new MerSalCompanyReportModel();
+            //    //通過反射獲取T類型的所有成員
+            //    foreach (PropertyInfo pi in prop2)
+            //    {
+            //        //DataTable列名=屬性名
+            //        if (ds.Tables[1].Columns.Contains(pi.Name))
+            //        {
+            //            //屬性值不為空
+            //            if (dr[pi.Name] != DBNull.Value)
+            //            {
+            //                object value = Convert.ChangeType(dr[pi.Name], pi.PropertyType);
+            //                //給T類型字段賦值
+            //                pi.SetValue(t2, value, null);
+            //            }
+            //        }
+            //    }
+            //    //將T類型添加到集合list
+            //    merSalCompanyReports.Add(t2);
+            //}
+            #endregion
+
+            ExcelWorksheet sheet = excel.Workbook.Worksheets.Add("保險公司佣酬檢核報表");
+            //直排
+            int a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7, h = 8, j = 9, k = 10, l = 11, m = 12, n = 13, o = 14;
+            //橫排
+            int aa = 3, bb = 13;
+
+            #region 系統執行項目
+            //for (int i = 0; i < merSalSystemReports.Count; i++)
+            //{
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].amount_type }, aa, a);
+            //    sheet.Cells[aa, a].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].modx_year_name }, aa, b);
+            //    sheet.Cells[aa, b].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].Cnt_Cut00 }, aa, c);
+            //    sheet.Cells[aa, c].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].ModePrem_Cut00 }, aa, d);
+            //    sheet.Cells[aa, d].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].CommPrem_Cut00 }, aa, e);
+            //    sheet.Cells[aa, e].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].Cnt_Cut01 }, aa, f);
+            //    sheet.Cells[aa, f].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].ModePrem_Cut01 }, aa, g);
+            //    sheet.Cells[aa, g].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].CommPrem_Cut01 }, aa, h);
+            //    sheet.Cells[aa, h].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].Cnt_Check }, aa, j);
+            //    sheet.Cells[aa, j].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].ModePrem_Check }, aa, k);
+            //    sheet.Cells[aa, k].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].CommPrem_Check }, aa, l);
+            //    sheet.Cells[aa, l].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].Cnt_Total }, aa, m);
+            //    sheet.Cells[aa, m].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].ModePrem_Total }, aa, n);
+            //    sheet.Cells[aa, n].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalSystemReports[i].CommPrem_Total }, aa, o);
+            //    sheet.Cells[aa, o].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    aa++;
+            //}
+            #endregion
+
+            #region 保險公司佣酬檢核表
+            //for (int i = 0; i < merSalCompanyReports.Count; i++)
+            //{
+            //    ExcelSetCell(sheet, new string[] { merSalCompanyReports[i].production_ym }, bb, a);
+            //    sheet.Cells[bb, a].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalCompanyReports[i].sequence }, bb, b);
+            //    sheet.Cells[bb, b].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalCompanyReports[i].company_code }, bb, c);
+            //    sheet.Cells[bb, c].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalCompanyReports[i].cnt }, bb, d);
+            //    sheet.Cells[bb, d].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalCompanyReports[i].mode_prem }, bb, e);
+            //    sheet.Cells[bb, e].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //    ExcelSetCell(sheet, new string[] { merSalCompanyReports[i].comm_prem }, bb, f);
+            //    sheet.Cells[bb, f].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            //    bb++;
+            //}
+            #endregion
+
+            #region 標題
+            //sheet 標題 橫排 直排
+            ExcelSetCell(sheet, new string[] { "系統執行項目" }, 1, 1);
+            ExcelSetCell(sheet, new string[] { "" }, 1, 14);
+            sheet.Cells[1, 1, 1, 14].Merge = true;
+            sheet.Cells[1, 1, 1, 14].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            //sheet.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            //sheet.Cells[1, 1].Style.Font.Color.SetColor(Color.Blue);
+
+            ExcelSetCell(sheet, new string[] { "佣酬類別" }, 2, 1);
+            ExcelSetCell(sheet, new string[] { "年期" }, 2, 2);
+            ExcelSetCell(sheet, new string[] { "系統(保留)筆數" }, 2, 3);
+            ExcelSetCell(sheet, new string[] { "系統(保留)保費" }, 2, 4);
+            ExcelSetCell(sheet, new string[] { "系統(保留)佣金" }, 2, 5);
+            ExcelSetCell(sheet, new string[] { "系統(人工調帳)筆數" }, 2, 6);
+            sheet.Cells[2, 7].Style.WrapText = true;
+            ExcelSetCell(sheet, new string[] { "永達-繳別繳次系統\n(人工調帳)保費" }, 2, 7);
+            ExcelSetCell(sheet, new string[] { "系統(人工調帳)佣金" }, 2, 8);
+            ExcelSetCell(sheet, new string[] { "轉入佣酬計算筆數" }, 2, 9);
+            ExcelSetCell(sheet, new string[] { "轉入佣酬計算保費" }, 2, 10);
+            ExcelSetCell(sheet, new string[] { "轉入佣酬計算佣金" }, 2, 11);
+            ExcelSetCell(sheet, new string[] { "合計筆數" }, 2, 12);
+            ExcelSetCell(sheet, new string[] { "合計保費" }, 2, 13);
+            ExcelSetCell(sheet, new string[] { "合計佣金" }, 2, 14);
+            for (int y = 1; y <= 14; y++)
+            {
+                sheet.Cells[2, y].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[2, y].Style.Fill.BackgroundColor.SetColor(Color.LightSteelBlue);
+            }
+
+            ExcelSetCell(sheet, new string[] { "保險公司佣酬檢核表" }, 11, 1);
+            ExcelSetCell(sheet, new string[] { "" }, 11, 2);
+            ExcelSetCell(sheet, new string[] { "" }, 11, 3);
+            ExcelSetCell(sheet, new string[] { "" }, 11, 4);
+            ExcelSetCell(sheet, new string[] { "" }, 11, 5);
+            ExcelSetCell(sheet, new string[] { "" }, 11, 6);
+            sheet.Cells[11, 1, 11, 6].Merge = true;
+            sheet.Cells[11, 1, 11, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ExcelSetCell(sheet, new string[] { "工作月" }, 12, 1);
+            ExcelSetCell(sheet, new string[] { "次薪" }, 12, 2);
+            ExcelSetCell(sheet, new string[] { "保險公司" }, 12, 3);
+            ExcelSetCell(sheet, new string[] { "筆數" }, 12, 4);
+            ExcelSetCell(sheet, new string[] { "保費" }, 12, 5);
+            ExcelSetCell(sheet, new string[] { "佣金" }, 12, 6);
+            for (int y = 1; y <= 6; y++)
+            {
+                sheet.Cells[12, y].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                sheet.Cells[12, y].Style.Fill.BackgroundColor.SetColor(Color.LightSteelBlue);
+            }
+            #endregion
+
+            sheet.Column(1).Width = 20;
+            sheet.Cells.Style.ShrinkToFit = true;
+            //字型
+            sheet.Cells.Style.Font.Name = "微軟正黑體";
+            //文字大小
+            sheet.Cells.Style.Font.Size = 10;
+            excel.SaveAs(ms);
+            excel.Dispose();
+            ms.Position = 0;
+            return ms;
+            //if (merSalSystemReports.Count != 0 || merSalCompanyReports.Count != 0)
+            //{
+            //    return ms;
+            //}
+            //else
+            //{
+            //    return Stream.Null;
+            //}
+        }
 
         #region EPPlus
         /// <summary>

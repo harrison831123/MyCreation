@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<div id="signalrdata">
+
+</div>
+
+
+<script src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+<script src="https://a.com/SignalR/signalr/hubs"></script>
+<script src="~/Scripts/ua-parser.js"></script>
+<script>
+    $(function () {
+            var parser = new UAParser();
+            var parserrs = parser.getResult();
+            var browser = parserrs.browser;//瀏覽器資訊 {name: "Chromium", version: "15.0.874.106"}
+            var device = parserrs.device;//裝置資訊 {model: undefined, type: undefined, vendor: undefined}
+            var os = parserrs.os; //作業系統版本 {name: "Ubuntu", version: "11.10"}
+
+            var connection = $.hubConnection("https://a.com:44368/SignalR/")
+            @*var BrowserType = "@agentInfo.Device"
+            var GuidToken = "@agentInfo.GuidToken"*@
+            var SignalRUser;
+            //user與api連線，並儲存綁定唯一碼connectionid
+            connection.start().done(function () {
+                //console.log('Now connected, connection ID=' + connection.id);
+                SignalRUser = {
+                    ConnectionID: connection.id,
+                    BrowserType: BrowserType,
+                    GuidToken: GuidToken,
+                    browser: browser,
+                    device: device,
+                    os: os
+                };
+                $.ajax({
+                    url: "/SignalR/SaveConnectionid",
+                    type: 'Post',
+                    data: JSON.stringify({ SignalRUser: SignalRUser}),
+                    contentType: 'application/json',
+                    success: function () {
+                        //console.log('success for save connection.id')
+                    }
+                })
+
+            }).fail(function () { console.log('Could not connect'); });
+            //執行離線資料撈取
+            Offlinedata();
+            //群組發送接收端
+            var SignalRHubProxy = connection.createHubProxy('SignalRHub');
+            //connection.qs = { 'groupname': groupname }
+            SignalRHubProxy.on('show', function (name,message, id, date, SystemType) {
+                // Add the message to the page.
+                $('#signalrdata').prepend('<div class="signalrpersonl"  onclick="changeclicktype(' + id + ',' + "'" + name + "'" + ',' + "'" + SystemType + "'" + ')"  title="' + message + '"  href = "#" >' + '<ul style="list-style-type: disc;">'
+                    + '<li class="sigmessage" >'+ name + ":" + message + '</li>' + '<br>' + '<p class="date">' + date + '</p>' + '</ul>' + '</div >' );
+                reddot();
+                Wordlimit();
+            });
+             //個人發送接收端
+            SignalRHubProxy.on('SendAsync', function (message, name, id, date, SystemType) {
+                if (SystemType == "BPM") {
+                    $('#signalrdata').prepend('<div id="' + id + '"   class="signalrpersonl" name = "Demand" onclick="changeclicktype(' + id + ',' + "'" + name + "'" + ',' + "'" + SystemType + "'" + ')" title="' + name + ":" + message + '"  href = "#" >' + '<ul class="sigul" style="list-style-type: disc;">'
+                        + '<li class="sigmessage" >' + "系統需求單" + ":" + message + '</li>' + '<br>' + '<p class="date">' + date + '</p>' + '</ul>' + '</div >');
+                    reddot();
+                    Wordlimit();
+                }
+                else if (SystemType == "logoff") {//執行登出
+                    window.location.href = "@System.Web.Configuration.WebConfigurationManager.AppSettings["Logoff"]";
+                }
+                else {
+                    $('#signalrdata').prepend('<div id="' + id + '"   class="signalrpersonl" name = "Demand" onclick="changeclicktype(' + id + ',' + "'" + name + "'" + ',' + "'" + SystemType + "'" + ')" title="' + name + ":" + message + '"  href = "#" >' + '<ul class="sigul" style="list-style-type: disc;">'
+                        + '<li class="sigmessage" >' + name + ":" + message + '</li>' + '<br>' + '<p class="date">' + date + '</p>' + '</ul>' + '</div >');
+                    reddot();
+                    Wordlimit();
+                }
+            });
+        });
+
+
+</script>
