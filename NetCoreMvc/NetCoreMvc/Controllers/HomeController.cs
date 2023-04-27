@@ -40,13 +40,13 @@ namespace NetCoreMvc.Controllers
 
 			#region 模式設定
 			//問答
-			await api.CompletionsEndpoint.StreamCompletionAsync(result =>
-			{
-				foreach (var choice in result.Completions)
-				{
-					temp.Chat += choice.Text;
-				}
-			}, Chat, max_tokens: 500, temperature: 0,top_p : 1, presencePenalty: 0.0, frequencyPenalty: 0.0, model: "text-davinci-003");
+			//await api.CompletionsEndpoint.StreamCompletionAsync(result =>
+			//{
+			//	foreach (var choice in result.Completions)
+			//	{
+			//		temp.Chat += choice.Text;
+			//	}
+			//}, Chat, maxTokens: 500, topP: 1.0, temperature: 0, presencePenalty: 0.0, frequencyPenalty: 0.0, model: "text-davinci-003");
 
 			//關鍵字
 			//await api.CompletionsEndpoint.StreamCompletionAsync(result =>
@@ -55,18 +55,26 @@ namespace NetCoreMvc.Controllers
 			//	{
 			//		temp.Chat += choice.Text;
 			//	}
-			//}, Chat, max_tokens: 500, temperature: 0.5, presencePenalty: 0.8, frequencyPenalty: 0.0, model: "text-davinci-003");
+			//}, Chat, maxTokens: 500, temperature: 0.5, presencePenalty: 0.8, frequencyPenalty: 0.0, model: "text-davinci-003");
 
 			//聊天模式
-			//await api.CompletionsEndpoint.StreamCompletionAsync(result =>
-			//{
-			//	foreach (var choice in result.Completions)
-			//	{
-			//		temp.Chat += choice.Text;
-			//	}
-			//}, Chat, model: "text-davinci-003",temperature: 0.5,max_tokens: 500,top_p: 1.0,frequencyPenalty: 0.5,presencePenalty: 0.0);
+			await api.CompletionsEndpoint.StreamCompletionAsync(result =>
+			{
+				foreach (var choice in result.Completions)
+				{
+					temp.Chat += choice.Text;
+				}
+			}, Chat, model: "text-davinci-003", temperature: 0.5, maxTokens: 500, topP: 1.0, frequencyPenalty: 0.5, presencePenalty: 0.0);
 
-			temp.Chat = DateTime.Now.ToString() + " AI: " + temp.Chat;
+			//var resultCreate = await api.CompletionsEndpoint.CreateCompletionAsync(Chat, temperature: 0.1, model: Model.Davinci);
+
+			//await foreach (var token in api.CompletionsEndpoint.StreamCompletionEnumerableAsync(Chat, maxTokens: 200, temperature: 0.5, presencePenalty: 0.1, frequencyPenalty: 0.1, model: Model.Davinci))
+			//{
+			//	Console.WriteLine(token);
+			//}
+
+
+			temp.Chat = " AI: " + temp.Chat;
 			openAIModels.Add(temp);
 			#endregion
 
